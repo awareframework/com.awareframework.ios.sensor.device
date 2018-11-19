@@ -43,10 +43,10 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		62249977EDBEB7CBE9FA2E94 /* Pods-com.awareframework.ios.sensor.device_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.device_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-com.awareframework.ios.sensor.device_Example/Pods-com.awareframework.ios.sensor.device_Example.release.xcconfig"; sourceTree = "<group>"; };
 		82EB4A6289D142D1C60707CA /* Pods-com.awareframework.ios.sensor.device_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.device_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-com.awareframework.ios.sensor.device_Example/Pods-com.awareframework.ios.sensor.device_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		88D1D6B9EC4AF24861B15DF5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		88D1D6B9EC4AF24861B15DF5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		9D6987E7DB1E9F13F2D51BD5 /* Pods_com_awareframework_ios_sensor_device_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_com_awareframework_ios_sensor_device_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A798F962D8DB856263159245 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		C8AF9583A9C53D5707D579E1 /* com.awareframework.ios.sensor.device.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = com.awareframework.ios.sensor.device.podspec; path = ../com.awareframework.ios.sensor.device.podspec; sourceTree = "<group>"; };
+		A798F962D8DB856263159245 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		C8AF9583A9C53D5707D579E1 /* com.awareframework.ios.sensor.device.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = com.awareframework.ios.sensor.device.podspec; path = ../com.awareframework.ios.sensor.device.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +212,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = FH352PYMNC;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -292,12 +293,24 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-com.awareframework.ios.sensor.device_Example/Pods-com.awareframework.ios.sensor.device_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Networking/Networking.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/com.awareframework.ios.sensor.core/com_awareframework_ios_sensor_core.framework",
 				"${BUILT_PRODUCTS_DIR}/com.awareframework.ios.sensor.device/com_awareframework_ios_sensor_device.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Networking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/com_awareframework_ios_sensor_core.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/com_awareframework_ios_sensor_device.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,7 +435,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -468,7 +481,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -481,7 +494,9 @@
 			baseConfigurationReference = 82EB4A6289D142D1C60707CA /* Pods-com.awareframework.ios.sensor.device_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = FH352PYMNC;
 				INFOPLIST_FILE = com.awareframework.ios.sensor.device/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -496,7 +511,9 @@
 			baseConfigurationReference = 62249977EDBEB7CBE9FA2E94 /* Pods-com.awareframework.ios.sensor.device_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = FH352PYMNC;
 				INFOPLIST_FILE = com.awareframework.ios.sensor.device/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
