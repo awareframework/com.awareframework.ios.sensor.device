@@ -1,6 +1,6 @@
 # Aware Device
 
-[![CI Status](https://img.shields.io/travis/tetujin/com.aware.ios.sensor.device.svg?style=flat)](https://travis-ci.org/tetujin/com.aware.ios.sensor.device)
+[![CI Status](https://img.shields.io/awareframework/tetujin/com.aware.ios.sensor.device.svg?style=flat)](https://travis-ci.org/awareframework/com.aware.ios.sensor.device)
 [![Version](https://img.shields.io/cocoapods/v/com.aware.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.aware.ios.sensor.device)
 [![License](https://img.shields.io/cocoapods/l/com.aware.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.aware.ios.sensor.device)
 [![Platform](https://img.shields.io/cocoapods/p/com.aware.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.aware.ios.sensor.device)
