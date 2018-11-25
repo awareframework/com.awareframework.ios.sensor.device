@@ -57,7 +57,6 @@ Class to hold the configuration of the sensor.
 ### Device Data
 | Field        | Type   | Description                                                            |
 | ------------ | ------ | ---------------------------------------------------------------------- |
-
 | label        | String | Customizable label. Useful for data calibration or traceability        |
 | timestamp    | Long   | unixtime milliseconds since 1970                                       |
 | timezone     | Int    | Timezone of the device                                 |
