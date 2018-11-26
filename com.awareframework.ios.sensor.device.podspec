@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.device'
-  s.version       = '0.1.5'
+  s.version       = '0.1.6'
   s.summary          = 'A short description of com.awareframework.ios.sensor.device.'
 
 # This description is used to generate tags and improve search results.
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/awareframework/com.com.awareframework.ios.sensor.device'
+  s.homepage         = 'https://github.com/awareframework/com.awareframework.ios.sensor.device'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'Apache2', :file => 'LICENSE' }
   s.author           = { 'tetujin' => 'tetujin@ht.sfc.keio.ac.jp' }
@@ -42,6 +42,5 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'com.awareframework.ios.sensor.core'
-  # s.dependency 'SystemServices', '~> 2.0.0'
   
 end

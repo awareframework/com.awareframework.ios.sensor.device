@@ -93,7 +93,7 @@ public class DeviceSensor: AwareSensor {
         }
         // e.g, Darwin Kernel Version 18.2.0: Tue Oct 16 21:02:38 PDT 2018; root:xnu-4903.222.5~1/RELEASE_ARM64_T8010
         if let v = device.version {
-            data.version = v
+            data.osVersion = v
         }
         
         if let engine = self.dbEngine {

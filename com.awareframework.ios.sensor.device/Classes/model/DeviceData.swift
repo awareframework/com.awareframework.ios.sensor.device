@@ -36,7 +36,7 @@ public class DeviceData: AwareObject {
     @objc dynamic public var modelCode : String = ""
         
     // device version (e.g., Darwin Kernel Version 18.0.0: Wed Aug 22 20:13:40 PDT 2018; root:xnu-4903.201.2~1/RELEASE_X86_64)
-    @objc dynamic public var version : String = ""
+    @objc dynamic public var osVersion : String = ""
     
     @objc dynamic public var manufacturer : String = "Apple"
     
@@ -50,7 +50,7 @@ public class DeviceData: AwareObject {
         dict["userInterfaceIdiom"] = userInterfaceIdiom
         dict["identifierForVendor"] = identifierForVendor
         dict["modelCode"] = modelCode
-        dict["version"] = version
+        dict["osVersion"] = osVersion
         dict["manufacturer"] = manufacturer        
         return dict
     }
