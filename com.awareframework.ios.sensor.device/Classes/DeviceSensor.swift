@@ -68,35 +68,32 @@ public class DeviceSensor: AwareSensor {
         let device = UIDevice.current
         let data = DeviceData()
         
-        // e.g., Apple
-        data.brand  = "Apple"
-        // e.g., iPhone, iPad, and iPod
-        data.device = device.model
-        // e.g., localized version of model
-        data.model = device.type.rawValue
-        // e.g., Apple
-        data.manufacturer = "Apple"
-        // e.g., iPhone XS, iPhone 7, and iPhone 8
-        data.product = device.type.rawValue
-        // UUID
-        data.serial = AwareUtils.getCommonDeviceId()
-        // iOS does not support this variable
-        data.releaseType = "unknown"
-        // e.g. "My iPhone"
+
+        // e.g., My iPhone
         data.label = device.name
-        // e.g., 12.0, 11.2, and 11.2.1
-        data.sdk = Double(device.systemVersion) ?? 0
-        // e.g., Darwin Kernel Version 18.0.0: Wed Aug 22 20:13:40 PDT 2018; root:xnu-4903.201.2~1/RELEASE_X86_64
-        if let unwrappedBuildId = device.version{
-            data.buildId = unwrappedBuildId
+        // e.g., iOS
+        data.systemName = device.systemName
+        // e.g., 12.1
+        data.systemVersion = device.systemVersion
+        // e.g, iPhone 7
+        data.product = device.type.rawValue
+        // e.g., iPhone
+        data.model = device.model
+        // e.g., iPhone
+        data.localizedModel = device.localizedModel
+        // e.g., phone, pad, tv, or carPlay
+        data.userInterfaceIdiom = device.userInterfaceIdiom.rawValue
+        // e.g., uuid
+        if let idForVendor = device.identifierForVendor {
+            data.identifierForVendor = idForVendor.uuidString
         }
-        // e.g., iPhone11,2 iPhone11,6
-        if let unwrappedModelCode = device.modelCode{
-            data.hardware = unwrappedModelCode
+        // e.g., iPhone9,1
+        if let code = device.modelCode {
+            data.modelCode = code
         }
-        // e.g., 18.0.0
-        if let unwrappedRelease = device.release{
-            data.releaseNumber = unwrappedRelease
+        // e.g, Darwin Kernel Version 18.2.0: Tue Oct 16 21:02:38 PDT 2018; root:xnu-4903.222.5~1/RELEASE_ARM64_T8010
+        if let v = device.version {
+            data.version = v
         }
         
         if let engine = self.dbEngine {

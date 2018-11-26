@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import com_awareframework_ios_sensor_device
 
 class ViewController: UIViewController {
 
+    var sensor:DeviceSensor?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        sensor = DeviceSensor.init();
+        sensor?.start()
     }
 
     override func didReceiveMemoryWarning() {
