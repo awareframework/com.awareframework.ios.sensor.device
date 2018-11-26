@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/com.awareframework.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.device)
 [![Platform](https://img.shields.io/cocoapods/p/com.awareframework.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.device)
 
-The device sensor monitors the device manufacturer, model, operating system version and other information. The information is provided by [UIDevice](https://developer.apple.com/documentation/uikit/uidevice).
+The device sensor provides device manufacturer, model, operating system version and other information. The information is provided by [UIDevice](https://developer.apple.com/documentation/uikit/uidevice).
 
 ## Requirements
 iOS 10 or later
@@ -29,7 +29,7 @@ import com_awareframework_ios_sensor_device
 ### DeviceSensor
 
 + `init(config:DeviceSensor.Config?)` : Initializes the device sensor with the optional configuration.
-+ `start()`: Starts the locations sensor with the optional configuration.
++ `start()`: Starts the device sensor with the optional configuration.
 + `stop()`: Stops the service.
 
 ### DeviceSensor.Config

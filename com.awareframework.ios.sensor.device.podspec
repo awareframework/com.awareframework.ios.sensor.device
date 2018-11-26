@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.device'
   s.version       = '0.1.6'
-  s.summary          = 'A short description of com.awareframework.ios.sensor.device.'
+  s.summary          = 'A Device Information Provider for AWARE Framework'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+The device sensor provides the device manufacturer, model, operating system version and other information. The information is provided by [UIDevice](https://developer.apple.com/documentation/uikit/uidevice).
                        DESC
 
   s.homepage         = 'https://github.com/awareframework/com.awareframework.ios.sensor.device'
@@ -41,6 +41,6 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-  s.dependency 'com.awareframework.ios.sensor.core'
+  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.3.0'
   
 end

@@ -44,8 +44,9 @@ public class DeviceSensor: AwareSensor {
             dbPath = "aware_device"
         }
         
-        public convenience init(_ json:JSON){
+        public convenience init(_ config:Dictionary<String,Any>){
             self.init()
+            set(config: config)
         }
         
         public func apply(closure:(_ config: DeviceSensor.Config) -> Void) -> Self {
