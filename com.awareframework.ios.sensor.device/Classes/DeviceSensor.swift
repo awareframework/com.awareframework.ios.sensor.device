@@ -24,11 +24,11 @@ extension Notification.Name{
 extension DeviceSensor{
     public static let TAG = "AWARE::Device"
     public static let ACTION_AWARE_DEVICE = "ACTION_AWARE_DEVICE"
-    public static let ACTION_AWARE_DEVICE_START = "com.awareframework.android.sensor.device.SENSOR_START"
-    public static let ACTION_AWARE_DEVICE_STOP  = "com.awareframework.android.sensor.device.SENSOR_STOP"
-    public static let ACTION_AWARE_DEVICE_SET_LABEL = "com.awareframework.android.sensor.device.SET_LABEL"
+    public static let ACTION_AWARE_DEVICE_START = "com.awareframework.sensor.device.SENSOR_START"
+    public static let ACTION_AWARE_DEVICE_STOP  = "com.awareframework.sensor.device.SENSOR_STOP"
+    public static let ACTION_AWARE_DEVICE_SET_LABEL = "com.awareframework.sensor.device.SET_LABEL"
     public static let EXTRA_LABEL = "label"
-    public static let ACTION_AWARE_DEVICE_SYNC = "com.awareframework.android.sensor.device.SENSOR_SYNC"
+    public static let ACTION_AWARE_DEVICE_SYNC = "com.awareframework.sensor.device.SENSOR_SYNC"
 
 }
 
@@ -42,11 +42,6 @@ public class DeviceSensor: AwareSensor {
         public override init(){
             super.init()
             dbPath = "aware_device"
-        }
-        
-        public convenience init(_ config:Dictionary<String,Any>){
-            self.init()
-            set(config: config)
         }
         
         public func apply(closure:(_ config: DeviceSensor.Config) -> Void) -> Self {

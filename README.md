@@ -1,4 +1,4 @@
-# Aware Device
+# AWARE: Device
 
 [![CI Status](https://img.shields.io/travis/awareframework/com.awareframework.ios.sensor.device.svg?style=flat)](https://travis-ci.org/awareframework/com.awareframework.ios.sensor.device)
 [![Version](https://img.shields.io/cocoapods/v/com.awareframework.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.device)
