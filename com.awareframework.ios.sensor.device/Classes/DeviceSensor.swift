@@ -110,7 +110,7 @@ public class DeviceSensor: AwareSensor {
     
     public override func sync(force: Bool = false) {
         if let dbEngine = self.dbEngine{
-            dbEngine.startSync(DeviceData.TABLE_NAME, DbSyncConfig().apply{config in
+            dbEngine.startSync(DeviceData.TABLE_NAME, DeviceData.self, DbSyncConfig().apply{config in
                 config.debug = self.CONFIG.debug
             })
             self.notificationCenter.post(name: .actionAwareDeviceSync, object: nil)

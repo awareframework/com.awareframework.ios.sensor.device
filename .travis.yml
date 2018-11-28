@@ -6,10 +6,22 @@ before_install:
 - gem install cocoapods
 - pod repo update
 - pod install --project-directory=Example
-
 script:
-  - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/com.awareframework.ios.sensor.device.xcworkspace -scheme com.awareframework.ios.sensor.device-Example -sdk iphonesimulator12.1 -destination OS=12.1,name="iPhone X" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO -allowProvisioningUpdates | XCPRETTY
-  # - pod lib lint com.awareframework.ios.sensor.device.podspec --allow-warnings
-
+- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/com.awareframework.ios.sensor.device.xcworkspace
+  -scheme com.awareframework.ios.sensor.device-Example -sdk iphonesimulator12.1 -destination
+  OS=12.1,name="iPhone X" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO -allowProvisioningUpdates
+  | XCPRETTY
+deploy:
+  provider: script
+  script: "./scripts/release.sh"
+  on:
+    tags: true
 after_success:
 - echo 'success!'
+env:
+  global:
+  - secure: QVcT70BsQXsKXEiWUUEnnZmGH+XjjzUFulloMMwb8FX6IkmbgOqYgYaqyXpAtBYTxwZUqNmjhPl+E85uqa5BkZTDRpnd3xemhqpm1lmgw+If/eQj0qsnRfs2RrhxgYsopemeTqowMBlrR0HEvSZjwCEd81KqgC2i0SgWcEH8L/whJycZ22GKK3RIDbFWsz8nZBB3SSEy5hM+ZApFRd/R7466lapiPVjeI9yQZjawHRJ3b9pE565CyfY8bY9CPHp28Fptp9wqFPRatFiAcvMJOURVWxW1qgKnFdn90Rn4L6so8qypIxgjCM//U4cUwldn82tRQ8tiu64hPqrSbxDU5hvZ+iEpwsueXvm7IhyNnH8/bAGsSjLt53qiMXNShVsR0AV9UHlSM66hPV8dK/cQGnH/+GVK/MGpRpA8vgApaUqGeq6l3uQTky3weJM32B7hUkkXqi81PmI+psH751PiqjlFTT7HfkDAUD78VtX9BdkiwBiOY68Kw0+4GqrfDZBbFwKBFn0lGCj/U/NgwjJRmbIt4MhX/xf0lRgJ2oYKDfLNU1vYgzK97cjvCn4+WaZz8gxVzUNtdIxRDufxMkupvUtVnSVMvpc7LLk468M5HKItIJEXSEgFJMWow0sBMTc/3E/f4FKDtmgWRFOBgxaqO4KxfiewKf5mM9tZUeYmgu4=
+  - secure: mx70uKqAAhjMslbiabF9vhwMzj/7FDZRimPI/qbjYWyTMs6jdVtb4SO5mwEWWnhK4DDK7BAxydCg6rfBC/w2vSjDClkHdvR4RBlNLV3YPAGqwTLgIzOzm8hWSNjyRkkbg+fjKdf+S2RQDENIemZalM9EsSp01IoHHh+7mt78G05sILjSjTbByL8qyzKEzx/EtyGzWUDbfGVf0Q2bgSQD85IWFtwrfiwpXlI7eTh9s8NudriiYRIYd0DjzpWEj85Bwb5dbV88pqbfMi0x+7a7RbqxAyS+eD7Z4W26o8h+mlSDcwPu6mz/BtG8Aj9+dGbWI/+RcIkUBYT+SGIqvqrRwpuyAmZ0A1ZbScKLfHwShuJ6FTzSVaCsSbXqh1P9PHrmnB05Loco7+ao8UKceAo8jCaXIU6A6dikwfHJC7Dhm22J6zl0Iss8l8HfYBaQaFHVJ3N2NsSAtlY7I3m6acBi+a7lGreI14CIl9k78lpd7dAyVLXHZcwg56e4uf7+ppe9Ad0iMScU7/csTYVMUN6+gMFhEHpFSDYM9u+UvpFEPldVU/YxcBq8DzDYqfAg+Y9PED6fpPnoESSIoi8gWQOyF0zvjbcdA96EESLTMuCIlTqM968aYWdFjbvN63OKnQs6dm0HIzMVOr+4Yv0yAJiJjQGvS4UyF+JAyFAaUPFYYbU=
+notifications:
+  slack:
+    secure: Z54FqgJJmhH62mEFs2nnw3zykk0y0J5EehE88NpJAtjTHY3snNKLzsFgRPLBh2om0vksIBs6nxZAv7jYiDrufp9PJssJGbtvfKyOoVYLIE88tlEB9FBu0sgaZOSe9+2oyvM/pVA4VU4GV/qZ28MYHP2Y00dum2+53S5pYmVvSBw61+Vmg0KdZBMs7ffGeWYHIhXRCizakgrJpuNxyxmn/75vqgHNwUqa+IJb1x++l7AA1ZNtWMYb8CRhOcVLv111yFO9FThNojGN4WwbgtllD4qWtybJIns6g20GTicrc0s0UxUdhfTEdnD3lPCzBK3ViCIx+sH4R6yQwQO9NxVZ0mS/XqXQkv9Vv1uKet6Y/P+bJEddD+lGdidpcdDepzF62MFxR7JUE8SxoZRZIvUT2cdPyCTUDbaXgL2NBJ+MF/UNOHwye6adXdDzwXx7YaUBV9tUxqFSJxN/qHGGm3K0Rz38Eb+W6TOK+8wCjEuR5GPBF4DYMVAteDtx79ang3K7FdTnPywIN/jELf/ZCHciwXvSK5z1bXUYDDSJOmE2kjpZJ6p3tuaKcJ1ZcuL4HbUZ+qMhDL27uxYCDzP8BTcni1drSX8AB5pfD2DVDE9KVA3hn40WSlRtdWbPO4lDE6G520J9mlG8559GXU1Jl/x0+IwG5BHwzTaSl65jU8APAkw=
