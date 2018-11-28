@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.device'
-  s.version       = ''
+  s.version       = '0.2.1'
   s.summary          = 'A Device Information Provider for AWARE Framework'
 
 # This description is used to generate tags and improve search results.
