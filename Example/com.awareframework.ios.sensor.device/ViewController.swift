@@ -16,8 +16,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        sensor = DeviceSensor.init();
-        sensor?.start()
+//        let sensor = DeviceSensor.init(DeviceSensor.Config().apply{ config in
+//            config.debug = true
+//            config.dbType = .REALM
+//            config.dbHost = "node.awareframework.com:1001"
+//        })
+//        sensor.start()
+//        
+//        sensor.sync(force: true)
     }
 
     override func didReceiveMemoryWarning() {

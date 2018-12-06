@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 import com_awareframework_ios_sensor_core
 
-public protocol DeviceOserver{
+public protocol DeviceObserver{
     func onDeviceChanged(data: DeviceData)
 }
 
@@ -23,13 +23,12 @@ extension Notification.Name{
 
 extension DeviceSensor{
     public static let TAG = "AWARE::Device"
-    public static let ACTION_AWARE_DEVICE = "ACTION_AWARE_DEVICE"
-    public static let ACTION_AWARE_DEVICE_START = "com.awareframework.sensor.device.SENSOR_START"
-    public static let ACTION_AWARE_DEVICE_STOP  = "com.awareframework.sensor.device.SENSOR_STOP"
-    public static let ACTION_AWARE_DEVICE_SET_LABEL = "com.awareframework.sensor.device.SET_LABEL"
+    public static let ACTION_AWARE_DEVICE = "com.awareframework.ios.sensor.device"
+    public static let ACTION_AWARE_DEVICE_START = "com.awareframework.ios.sensor.device.SENSOR_START"
+    public static let ACTION_AWARE_DEVICE_STOP  = "com.awareframework.ios.sensor.device.SENSOR_STOP"
+    public static let ACTION_AWARE_DEVICE_SET_LABEL = "com.awareframework.ios.sensor.device.SET_LABEL"
     public static let EXTRA_LABEL = "label"
-    public static let ACTION_AWARE_DEVICE_SYNC = "com.awareframework.sensor.device.SENSOR_SYNC"
-
+    public static let ACTION_AWARE_DEVICE_SYNC = "com.awareframework.ios.sensor.device.SENSOR_SYNC"
 }
 
 public class DeviceSensor: AwareSensor {
@@ -37,7 +36,7 @@ public class DeviceSensor: AwareSensor {
     public var CONFIG = Config()
     
     public class Config:SensorConfig{
-        public var sensorObserver:DeviceOserver?
+        public var sensorObserver:DeviceObserver?
         
         public override init(){
             super.init()
@@ -115,6 +114,13 @@ public class DeviceSensor: AwareSensor {
             })
             self.notificationCenter.post(name: .actionAwareDeviceSync, object: nil)
         }
+    }
+    
+    public func set(label:String){
+        self.CONFIG.label = label
+        self.notificationCenter.post(name: .actionAwareDeviceSetLabel,
+                                     object: nil,
+                                     userInfo:[DeviceSensor.EXTRA_LABEL:label])
     }
 }
 
