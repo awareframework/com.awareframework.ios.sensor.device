@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.device'
-  s.version       = '0.2.2'
+  s.version       = '0.4.0'
   s.summary          = 'A Device Information Provider for AWARE Framework'
 
 # This description is used to generate tags and improve search results.
@@ -41,6 +41,6 @@ The device sensor provides the device manufacturer, model, operating system vers
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.3.3'
+  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.4.1'
   
 end

@@ -1,5 +1,6 @@
 import XCTest
 import RealmSwift
+import com_awareframework_ios_sensor_core
 import com_awareframework_ios_sensor_device
 
 class Tests: XCTestCase {
@@ -15,33 +16,17 @@ class Tests: XCTestCase {
         super.tearDown()
     }
     
-    func testSync(){
-        //        let sensor = DeviceSensor.init(DeviceSensor.Config().apply{ config in
-        //            config.debug = true
-        //            config.dbType = .REALM
-        //        })
-        //        sensor.start();
-        //        sensor.enable();
-        //        sensor.sync(force: true)
-        
-        //        let syncManager = DbSyncManager.Builder()
-        //            .setBatteryOnly(false)
-        //            .setWifiOnly(false)
-        //            .setSyncInterval(1)
-        //            .build()
-        //
-        //        syncManager.start()
-    }
-    
     func testStorage(){
         let sensor = DeviceSensor.init(DeviceSensor.Config().apply{ config in
             config.dbType = .REALM
         })
         sensor.start()
         if let engine = sensor.dbEngine {
-            if let data = engine.fetch(DeviceData.TABLE_NAME, DeviceData.self, nil) as? Results<Object> {
-                if data.count != 1{
-                    XCTFail()
+            engine.fetch(DeviceData.self, nil){ (resultsObject, error) in
+                if let results = resultsObject as? Results<Object>{
+                    if results.count != 1 {
+                        XCTFail()
+                    }
                 }
             }
         }
@@ -138,5 +123,142 @@ class Tests: XCTestCase {
         XCTAssertEqual(dict["osVersion"] as? String, "")
         XCTAssertEqual(dict["manufacturer"] as? String, "Apple")
     }
+    
+    
+    func testSyncModule(){
+        #if targetEnvironment(simulator)
+        
+        print("This test requires a real device.")
+        
+        #else
+        // success //
+        let sensor = DeviceSensor.init(DeviceSensor.Config().apply{ config in
+            config.debug = true
+            config.dbType = .REALM
+            config.dbHost = "node.awareframework.com:1001"
+            config.dbPath = "sync_db"
+        })
+        if let engine = sensor.dbEngine as? RealmEngine {
+            engine.removeAll(DeviceData.self)
+            for _ in 0..<100 {
+                engine.save(DeviceData())
+            }
+        }
+        let successExpectation = XCTestExpectation(description: "success sync")
+        let observer = NotificationCenter.default.addObserver(forName: Notification.Name.actionAwareDeviceSyncCompletion,
+                                                              object: sensor, queue: .main) { (notification) in
+                                                                if let userInfo = notification.userInfo{
+                                                                    if let status = userInfo["status"] as? Bool {
+                                                                        if status == true {
+                                                                            successExpectation.fulfill()
+                                                                        }
+                                                                    }
+                                                                }
+        }
+        sensor.sync(force: true)
+        wait(for: [successExpectation], timeout: 20)
+        NotificationCenter.default.removeObserver(observer)
+        
+        ////////////////////////////////////
+        
+        // failure //
+        let sensor2 = DeviceSensor.init(DeviceSensor.Config().apply{ config in
+            config.debug = true
+            config.dbType = .REALM
+            config.dbHost = "node.awareframework.com.com" // wrong url
+            config.dbPath = "sync_db"
+        })
+        let failureExpectation = XCTestExpectation(description: "failure sync")
+        let failureObserver = NotificationCenter.default.addObserver(forName: Notification.Name.actionAwareDeviceSyncCompletion,
+                                                                     object: sensor2, queue: .main) { (notification) in
+                                                                        if let userInfo = notification.userInfo{
+                                                                            if let status = userInfo["status"] as? Bool {
+                                                                                if status == false {
+                                                                                    failureExpectation.fulfill()
+                                                                                }
+                                                                            }
+                                                                        }
+        }
+        if let engine = sensor2.dbEngine as? RealmEngine {
+            engine.removeAll(DeviceData.self)
+            for _ in 0..<100 {
+                engine.save(DeviceData())
+            }
+        }
+        sensor2.sync(force: true)
+        wait(for: [failureExpectation], timeout: 20)
+        NotificationCenter.default.removeObserver(failureObserver)
+        
+        #endif
+    }
+    
+    
+    
+    
+    
+    
+    
+    ///////////////////////////////////////////
+    
+    
+    //////////// storage ///////////
+    
+    var realmToken:NotificationToken? = nil
+    
+    func testSensorModule(){
+        
+//        #if targetEnvironment(simulator)
+//
+//        print("This test requires a real device.")
+//
+//        #else
+        
+        let sensor = DeviceSensor.init(DeviceSensor.Config().apply{ config in
+            config.debug = true
+            config.dbType = .REALM
+            config.dbPath = "sensor_module"
+        })
+        let expect = expectation(description: "sensor module")
+        if let realmEngine = sensor.dbEngine as? RealmEngine {
+            // remove old data
+            realmEngine.removeAll(DeviceData.self)
+            // get a RealmEngine Instance
+            if let realm = realmEngine.getRealmInstance() {
+                // set Realm DB observer
+                realmToken = realm.observe { (notification, realm) in
+                    switch notification {
+                    case .didChange:
+                        // check database size
+                        let results = realm.objects(DeviceData.self)
+                        print(results.count)
+                        XCTAssertGreaterThanOrEqual(results.count, 1)
+                        realm.invalidate()
+                        expect.fulfill()
+                        self.realmToken = nil
+                        break;
+                    case .refreshRequired:
+                        break;
+                    }
+                }
+            }
+        }
+        
+        let storageExpect = expectation(description: "sensor storage notification")
+        var token: NSObjectProtocol?
+        token = NotificationCenter.default.addObserver(forName: Notification.Name.actionAwareDevice,
+                                                       object: sensor,
+                                                       queue: .main) { (notification) in
+                                                            storageExpect.fulfill()
+                                                            NotificationCenter.default.removeObserver(token!)
+        }
+        
+        sensor.start() // start sensor
+        
+        wait(for: [expect,storageExpect], timeout: 10)
+        sensor.stop()
+
+//        #endif
+    }
+
     
 }

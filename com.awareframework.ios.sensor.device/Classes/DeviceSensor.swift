@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 import com_awareframework_ios_sensor_core
 
 public protocol DeviceObserver{
@@ -19,6 +18,7 @@ extension Notification.Name{
     public static let actionAwareDeviceStop   = Notification.Name(DeviceSensor.ACTION_AWARE_DEVICE_STOP)
     public static let actionAwareDeviceSync   = Notification.Name(DeviceSensor.ACTION_AWARE_DEVICE_SYNC)
     public static let actionAwareDeviceSetLabel = Notification.Name(DeviceSensor.ACTION_AWARE_DEVICE_SET_LABEL)
+    public static let actionAwareDeviceSyncCompletion  = Notification.Name(DeviceSensor.ACTION_AWARE_DEVICE_SYNC_COMPLETION)
 }
 
 extension DeviceSensor{
@@ -29,6 +29,10 @@ extension DeviceSensor{
     public static let ACTION_AWARE_DEVICE_SET_LABEL = "com.awareframework.ios.sensor.device.SET_LABEL"
     public static let EXTRA_LABEL = "label"
     public static let ACTION_AWARE_DEVICE_SYNC = "com.awareframework.ios.sensor.device.SENSOR_SYNC"
+    
+    public static let ACTION_AWARE_DEVICE_SYNC_COMPLETION = "com.awareframework.ios.sensor.device.SENSOR_SYNC_COMPLETION"
+    public static let EXTRA_STATUS = "status"
+    public static let EXTRA_ERROR = "error"
 }
 
 public class DeviceSensor: AwareSensor {
@@ -92,34 +96,44 @@ public class DeviceSensor: AwareSensor {
         }
         
         if let engine = self.dbEngine {
-            engine.save(data, DeviceData.TABLE_NAME)
+            engine.save(data)
         }
         
         if let observer = self.CONFIG.sensorObserver {
             observer.onDeviceChanged(data: data)
         }
         
-        self.notificationCenter.post(name: .actionAwareDeviceStart, object:nil )
-        self.notificationCenter.post(name: .actionAwareDevice, object: nil)
+        self.notificationCenter.post(name: .actionAwareDeviceStart, object:self )
+        self.notificationCenter.post(name: .actionAwareDevice, object: self)
     }
     
     public override func stop() {
-        self.notificationCenter.post(name: .actionAwareDeviceStop, object:nil )
+        self.notificationCenter.post(name: .actionAwareDeviceStop, object:self )
     }
     
     public override func sync(force: Bool = false) {
         if let dbEngine = self.dbEngine{
             dbEngine.startSync(DeviceData.TABLE_NAME, DeviceData.self, DbSyncConfig().apply{config in
                 config.debug = self.CONFIG.debug
+                config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.device.sync.queue")
+                config.completionHandler = { (status, error) in
+                    var userInfo: Dictionary<String,Any> = ["status":status]
+                    if let e = error {
+                        userInfo["error"] = e
+                    }
+                    self.notificationCenter.post(name: .actionAwareDeviceSyncCompletion,
+                                                 object: self,
+                                                 userInfo:userInfo)
+                }
             })
-            self.notificationCenter.post(name: .actionAwareDeviceSync, object: nil)
+            self.notificationCenter.post(name: .actionAwareDeviceSync, object: self)
         }
     }
     
-    public func set(label:String){
+    public override func set(label:String){
         self.CONFIG.label = label
         self.notificationCenter.post(name: .actionAwareDeviceSetLabel,
-                                     object: nil,
+                                     object: self,
                                      userInfo:[DeviceSensor.EXTRA_LABEL:label])
     }
 }
