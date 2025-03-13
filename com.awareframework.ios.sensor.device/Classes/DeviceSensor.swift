@@ -200,7 +200,7 @@ public enum Model : String {
 
 public extension UIDevice {
     
-    public var modelCode:String?{
+    var modelCode:String?{
         var systemInfo = utsname()
         uname(&systemInfo)
         let modelCode = withUnsafePointer(to: &systemInfo.machine) {
@@ -211,7 +211,7 @@ public extension UIDevice {
         return modelCode
     }
     
-    public var release:String?{
+    var release:String?{
         var systemInfo = utsname()
         uname(&systemInfo)
         let release = withUnsafePointer(to: &systemInfo.release) {
@@ -222,7 +222,7 @@ public extension UIDevice {
         return release
     }
     
-    public var version:String?{
+    var version:String?{
         var systemInfo = utsname()
         uname(&systemInfo)
         let version = withUnsafePointer(to: &systemInfo.version) {
@@ -233,7 +233,7 @@ public extension UIDevice {
         return version
     }
     
-    public var nodename:String?{
+    var nodename:String?{
         var systemInfo = utsname()
         uname(&systemInfo)
         let nodename = withUnsafePointer(to: &systemInfo.nodename) {
@@ -244,7 +244,7 @@ public extension UIDevice {
         return nodename
     }
     
-    public var sysname:String?{
+    var sysname:String?{
         var systemInfo = utsname()
         uname(&systemInfo)
         let sysname = withUnsafePointer(to: &systemInfo.sysname) {
@@ -255,9 +255,9 @@ public extension UIDevice {
         return sysname
     }
     
-    public var type: Model {
+    var type: Model {
         let modelCode = self.modelCode
-        var modelMap : [ String : Model ] = [
+        let modelMap : [ String : Model ] = [
             "i386"      : .simulator,
             "x86_64"    : .simulator,
             //iPod
@@ -342,10 +342,10 @@ public extension UIDevice {
             "AppleTV6,2" : .AppleTV_4K
         ]
         
-        if let model = modelMap[String.init(validatingUTF8: modelCode!)!] {
+        if let model = modelMap[String(modelCode ?? "")] {
             if model == .simulator {
                 if let simModelCode = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
-                    if let simModel = modelMap[String.init(validatingUTF8: simModelCode)!] {
+                    if let simModel = modelMap[String(simModelCode)] {
                         return simModel
                     }
                 }

@@ -1,16 +1,33 @@
 # AWARE: Device
 
-[![CI Status](https://img.shields.io/travis/awareframework/com.awareframework.ios.sensor.device.svg?style=flat)](https://travis-ci.org/awareframework/com.awareframework.ios.sensor.device)
-[![Version](https://img.shields.io/cocoapods/v/com.awareframework.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.device)
-[![License](https://img.shields.io/cocoapods/l/com.awareframework.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.device)
-[![Platform](https://img.shields.io/cocoapods/p/com.awareframework.ios.sensor.device.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.device)
+
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 The device sensor provides device manufacturer, model, operating system version and other information. The information is provided by [UIDevice](https://developer.apple.com/documentation/uikit/uidevice).
 
 ## Requirements
-iOS 10 or later
+iOS 13 or later
+
 
 ## Installation
+
+You can integrate this framework into your project via Swift Package Manager (SwiftPM) or CocoaPods.
+
+### SwiftPM
+1. Open Package Manager Windows
+    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...` 
+
+2. Find the package using the manager
+    * Select `Search Package URL` and type `git@github.com:awareframework/com.awareframework.ios.sensor.device.git`
+
+3. Import the package into your target.
+
+4. Import com.awareframework.ios.sensor.device library into your source code.
+```swift
+import com_awareframework_ios_sensor_device
+```
+
+### CocoaPods
 
 com.aware.ios.sensor.device is available through [CocoaPods](https://cocoapods.org).
 
@@ -94,7 +111,7 @@ class Observer:DeviceOserver{
 
 ## Author
 
-Yuuki Nishiyama, yuuki.nishiyama@oulu.fi
+Yuuki Nishiyama (The University of Tokyo), nishiyama@csis.u-tokyo.ac.jp
 
 ## Related Links
 [ Apple | UIDevice ](https://developer.apple.com/documentation/uikit/uidevice)
