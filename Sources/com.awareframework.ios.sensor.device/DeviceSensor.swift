@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import com_awareframework_ios_sensor_core
+import com_awareframework_ios_core
 
 public protocol DeviceObserver{
     func onDeviceChanged(data: DeviceData)
@@ -65,7 +65,7 @@ public class DeviceSensor: AwareSensor {
     
     public override func start() {
         let device = UIDevice.current
-        let data = DeviceData()
+        var data = DeviceData()
         
 
         // e.g., My iPhone
@@ -96,7 +96,7 @@ public class DeviceSensor: AwareSensor {
         }
         
         if let engine = self.dbEngine {
-            engine.save(data)
+            engine.save([data])
         }
         
         if let observer = self.CONFIG.sensorObserver {
@@ -113,7 +113,7 @@ public class DeviceSensor: AwareSensor {
     
     public override func sync(force: Bool = false) {
         if let dbEngine = self.dbEngine{
-            dbEngine.startSync(DeviceData.TABLE_NAME, DeviceData.self, DbSyncConfig().apply{config in
+            dbEngine.startSync(DbSyncConfig().apply{config in
                 config.debug = self.CONFIG.debug
                 config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.device.sync.queue")
                 config.completionHandler = { (status, error) in
