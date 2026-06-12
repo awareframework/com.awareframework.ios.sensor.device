@@ -61,6 +61,9 @@ public class DeviceSensor: AwareSensor {
         super.init()
         CONFIG = config
         initializeDbEngine(config: config)
+        super.syncConfig = DbSyncConfig().apply { c in
+            c.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.device.sync.queue")
+        }
     }
     
     public override func start() {
@@ -112,22 +115,15 @@ public class DeviceSensor: AwareSensor {
     }
     
     public override func sync(force: Bool = false) {
-        if let dbEngine = self.dbEngine{
-            dbEngine.startSync(DbSyncConfig().apply{config in
-                config.debug = self.CONFIG.debug
-                config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.device.sync.queue")
-                config.completionHandler = { (status, error) in
-                    var userInfo: Dictionary<String,Any> = ["status":status]
-                    if let e = error {
-                        userInfo["error"] = e
-                    }
-                    self.notificationCenter.post(name: .actionAwareDeviceSyncCompletion,
-                                                 object: self,
-                                                 userInfo:userInfo)
-                }
-            })
-            self.notificationCenter.post(name: .actionAwareDeviceSync, object: self)
+        guard let engine = self.dbEngine, let syncConfig = self.syncConfig else { return }
+        syncConfig.debug = self.CONFIG.debug
+        syncConfig.completionHandler = { (status, error) in
+            var userInfo: Dictionary<String,Any> = ["status": status]
+            if let e = error { userInfo["error"] = e }
+            self.notificationCenter.post(name: .actionAwareDeviceSyncCompletion, object: self, userInfo: userInfo)
         }
+        engine.startSync(syncConfig)
+        self.notificationCenter.post(name: .actionAwareDeviceSync, object: self)
     }
     
     public override func set(label:String){

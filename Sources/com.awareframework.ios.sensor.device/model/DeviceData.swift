@@ -10,7 +10,7 @@ public struct DeviceData: BaseDbModelSQLite {
     public var timezone: Int = AwareUtils.getTimeZone()
     public var os: String = "iOS"
     public var jsonVersion: Int = 1
-    public static let databaseTableName = "deviceData"
+    public static let databaseTableName = "ios_device"
 
     public var systemName: String = ""
     public var systemVersion: String = ""

@@ -47,7 +47,7 @@ Class to hold the configuration of the sensor.
 + `label: String` Label for the data. (default = "")
 + `deviceId: String` Id of the device that will be associated with the events and the sensor. (default = "")
 + `dbEncryptionKey` Encryption key for the database. (default = `null`)
-+ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.REALM`)
++ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.NONE`)
 + `dbPath: String` Path of the database. (default = "aware_device")
 + `dbHost: String` Host for syncing the database. (default = `null`)
 
@@ -58,29 +58,29 @@ Class to hold the configuration of the sensor.
 ## Data Representations
 
 ### Device Data
-| Field        | Type   | Description                                                            |
-| ------------ | ------ | ---------------------------------------------------------------------- |
-| systemName |  String |  The name of the operating system running on the device represented by the receiver. (e.g., iOS)|
-| systemVersion | String | The current version of the operating system. (e.g., 12.1)|
-| product | String | The product name of the device. (e.g., iPhone 7) |
-| model | String | The model of the device. (e.g., iPhone) |
-| localizedModel | String | The model of the device as a localized string. (e.g., iPhone)|
-| userInterfaceIdiom| Int | The style of interface to use on the current device. (0=phone, 1=pad, 2=tv, or 3=carPlay) |
-| identifierForVendor | String | An alphanumeric string that uniquely identifies a device to the app’s vendor .|
-| modeCode | String | The model code of the device (e.g., iPhone9,1)|
-| osVersion  | String | OS version information from utsname.h (e.g., Darwin Kernel Version 18.0.0: Wed Aug 22 20:13:40 PDT 2018; root:xnu-4903.201.2~1/RELEASE_X86_64)|
-| manufacturer | String | Device's manufacturer name (e.g., Apple) |
-| deviceId     | String | AWARE device UUID                        |
-| label        | String | Customizable label. Useful for data calibration or traceability        |
-| timestamp    | Int64  | unixtime milliseconds since 1970                                       |
-| timezone     | Int    | Timezone of the device                                 |
-| os           | String | Operating system of the device (ex. android)                           |
+| Field               | Type   | Description                                                            |
+| ------------------- | ------ | ---------------------------------------------------------------------- |
+| systemName          | String | The name of the operating system running on the device (e.g., iOS)    |
+| systemVersion       | String | The current version of the operating system. (e.g., 12.1)             |
+| product             | String | The product name of the device. (e.g., iPhone 7)                       |
+| model               | String | The model of the device. (e.g., iPhone)                                |
+| localizedModel      | String | The model of the device as a localized string. (e.g., iPhone)          |
+| userInterfaceIdiom  | Int    | The style of interface to use on the current device. (0=phone, 1=pad, 2=tv, or 3=carPlay) |
+| identifierForVendor | String | An alphanumeric string that uniquely identifies a device to the app’s vendor. |
+| modelCode           | String | The model code of the device (e.g., iPhone9,1)                         |
+| osVersion           | String | OS version information from utsname.h                                  |
+| manufacturer        | String | Device’s manufacturer name (e.g., Apple)                               |
+| deviceId            | String | AWARE device UUID                                                      |
+| label               | String | Customizable label. Useful for data calibration or traceability        |
+| timestamp           | Int64  | unixtime milliseconds since 1970                                       |
+| timezone            | Int    | Timezone of the device                                                 |
+| os                  | String | Operating system of the device (ex. ios)                               |
+| jsonVersion         | Int    | JSON schema version                                                    |
 
 ## Example Usage
 ```swift
 let deviceSensor = DeviceSensor.init(DeviceSensor.Config().apply{config in
     config.debug = true
-    config.dbType = .REALM
     config.sensorObserver = Observer()
 })
 deviceSensor.start()
