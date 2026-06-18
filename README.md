@@ -15,7 +15,7 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 
 ### SwiftPM
 1. Open Package Manager Windows
-    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...` 
+    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...`
 
 2. Find the package using the manager
     * Select `Search Package URL` and type `git@github.com:awareframework/com.awareframework.ios.sensor.device.git`
@@ -27,11 +27,11 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 import com_awareframework_ios_sensor_device
 ```
 
-## Public functions
+## Public Functions
 
 ### DeviceSensor
 
-+ `init(config:DeviceSensor.Config?)` : Initializes the device sensor with the optional configuration.
++ `init(config:DeviceSensor.Config?)`: Initializes the device sensor with the optional configuration.
 + `start()`: Starts the device sensor with the optional configuration.
 + `stop()`: Stops the service.
 
@@ -42,18 +42,18 @@ Class to hold the configuration of the sensor.
 #### Fields
 
 + `sensorObserver: DeviceObserver?`: Callback for live data updates.
-+ `enabled: Boolean` Sensor is enabled or not. (default = `false`)
-+ `debug: Boolean` enable/disable logging to `Logcat`. (default = `false`)
-+ `label: String` Label for the data. (default = "")
-+ `deviceId: String` Id of the device that will be associated with the events and the sensor. (default = "")
-+ `dbEncryptionKey` Encryption key for the database. (default = `null`)
-+ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.NONE`)
-+ `dbPath: String` Path of the database. (default = "aware_device")
-+ `dbHost: String` Host for syncing the database. (default = `null`)
++ `enabled: Bool`: Sensor is enabled or not. (default = `false`)
++ `debug: Bool`: Enable/disable logging. (default = `false`)
++ `label: String`: Label for the data. (default = `""`)
++ `deviceId: String`: Id of the device that will be associated with the events and the sensor. (default = `""`)
++ `dbEncryptionKey: String?`: Encryption key for the database. (default = `nil`)
++ `dbType: DatabaseType`: Which db engine to use for saving data. (default = `.none`)
++ `dbPath: String`: Path of the database. (default = `"aware_device"`)
++ `dbHost: String?`: Host for syncing the database. (default = `nil`)
 
 ## Broadcasts
 
-+ `DeviceSensor.ACTION_AWARE_DEVICE` fired when device is profiled.
++ `DeviceSensor.ACTION_AWARE_DEVICE`: fired when device is profiled.
 
 ## Data Representations
 
@@ -79,7 +79,7 @@ Class to hold the configuration of the sensor.
 
 ## Example Usage
 ```swift
-let deviceSensor = DeviceSensor.init(DeviceSensor.Config().apply{config in
+let deviceSensor = DeviceSensor.init(DeviceSensor.Config().apply { config in
     config.debug = true
     config.sensorObserver = Observer()
 })
